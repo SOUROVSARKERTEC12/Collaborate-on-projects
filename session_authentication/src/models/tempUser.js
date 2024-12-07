@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.config.js';
 
-const User = sequelize.define('User', {
+const TempUser = sequelize.define('TempUser', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -36,7 +36,7 @@ const User = sequelize.define('User', {
     firstVisit: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-    },
+    }
 });
 
-export default User;
+export default TempUser;
