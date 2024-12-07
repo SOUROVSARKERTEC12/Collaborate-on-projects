@@ -7,12 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-
-// Routes
-app.use('/api', routes);
-
 const PORT = process.env.PORT || 5000;
-
 // Start server
 (async () => {
     try {
@@ -25,3 +20,10 @@ const PORT = process.env.PORT || 5000;
         console.error('Unable to connect to the database:', error);
     }
 })();
+
+
+// Routes
+app.use('/api', routes);
+
+
+
