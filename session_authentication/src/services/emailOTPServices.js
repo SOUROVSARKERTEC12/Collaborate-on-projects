@@ -1,31 +1,27 @@
-import db from '../models/index.js';
-import nodemailer from 'nodemailer'; // To send emails
-import {v4 as uuidv4 } from 'uuid';
+import nodemailer from 'nodemailer';
+import otpGenerator from "otp-generator"; // To send emails
 
 /**
  * Email OTP Service
  */
 
-const { User, TempUser, Session, OTPStore } = db;
+
 const EmailOTPService = {
     /**
      * Generate and store an OTP for a user
-     * @param {string} userId - The user's ID
      * @returns {string} The generated OTP
      */
-    async generateOTP(userId) {
-        const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
-        const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 minutes
-
-        await OTPStore.create({
-            id: uuidv4(),
-            userId,
-            otp,
-            expiresAt,
+    generateOTP: function () {
+        // Generate a 6-digit OTP
+        const otp = otpGenerator.generate(6, {
+            upperCaseAlphabets: false,
+            lowerCaseAlphabets: false,
+            specialChars: false,
+            digits: true,
         });
-
         return otp;
     },
+
 
     /**
      * Send the OTP to the user's email
@@ -33,8 +29,8 @@ const EmailOTPService = {
      * @param {string} email - The user's email address
      * @param {string} otp - The OTP to send
      */
-    async sendOTP(userId, email) {
-        const otp =  this.generateOTP(userId);
+    async sendOTP(otp, email) {
+
 
         // Configure nodemailer transporter
         const transporter = nodemailer.createTransport({
@@ -70,7 +66,7 @@ const EmailOTPService = {
      */
     async validateUser(email, password, inputOtp) {
         // Step 1: Find the user by email
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({where: {email}});
         if (!user) {
             throw new Error('User not found');
         }

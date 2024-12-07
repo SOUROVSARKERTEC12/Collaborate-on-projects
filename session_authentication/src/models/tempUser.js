@@ -3,7 +3,7 @@ import sequelize from '../config/database.config.js';
 
 const TempUser = sequelize.define('TempUser', {
     id: {
-        type: DataTypes.UUID,
+        type: DataTypes.STRING(100),
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },

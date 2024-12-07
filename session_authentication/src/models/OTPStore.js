@@ -1,16 +1,21 @@
-import { DataTypes } from 'sequelize';
+import {DataTypes} from 'sequelize';
 import sequelize from '../config/database.config.js';
+import User from "./User.js";
 
 const OTPStore = sequelize.define('OTPStore', {
     id: {
-        type: DataTypes.UUID,
+        type: DataTypes.STRING(100),
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
     userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
+        type: DataTypes.STRING(100),
+        allowNull: true,
         comment: 'The ID of the user associated with the OTP.',
+      /*  references: {
+            model: User,
+            key: 'id',
+        },*/
     },
     otp: {
         type: DataTypes.STRING,
@@ -20,6 +25,7 @@ const OTPStore = sequelize.define('OTPStore', {
     expiresAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         comment: 'The timestamp at which the OTP expires.',
     },
     used: {
@@ -28,5 +34,8 @@ const OTPStore = sequelize.define('OTPStore', {
         comment: 'Whether the OTP has been used.',
     },
 });
+
+/*User.hasMany(OTPStore, {foreignKey: 'userId', as: 'otp', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
+OTPStore.belongsTo(User, {foreignKey: 'userId', as: 'user', onDelete: 'SET NULL', onUpdate: 'CASCADE'});*/
 
 export default OTPStore;

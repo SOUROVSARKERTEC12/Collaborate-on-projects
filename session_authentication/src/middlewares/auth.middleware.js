@@ -1,6 +1,6 @@
-import db from '../models/index.js';
+import Session from "../models/Session.js";
+import User from "../models/User.js";
 
-const { Session, User } = db;
 
 export const authenticateSession = async (req, res, next) => {
     try {

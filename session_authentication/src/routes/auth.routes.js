@@ -6,7 +6,7 @@ import {
     verifyLoginOTP,
     logout,
     homepage,
-} from '../controllers/auth.controllers.js';
+} from '../controllers/index.js';
 
 const router = express.Router();
 
