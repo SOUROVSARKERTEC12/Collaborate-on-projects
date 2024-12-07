@@ -45,7 +45,7 @@ export const register = async (req, res) => {
         //const user = await TempUser.create(tempUserData, {transaction});
          await OTPStore.create({otp, userId: tempUserData.id}, {transaction});
 
-        console.log('after store')
+        //console.log('after store')
         await EmailOTPService.sendOTP(otp, validatedData.email);
 
         await transaction.commit();

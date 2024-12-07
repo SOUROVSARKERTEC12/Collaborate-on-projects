@@ -13,13 +13,12 @@ const EmailOTPService = {
      */
     generateOTP: function () {
         // Generate a 6-digit OTP
-        const otp = otpGenerator.generate(6, {
+        return otpGenerator.generate(6, {
             upperCaseAlphabets: false,
             lowerCaseAlphabets: false,
             specialChars: false,
             digits: true,
         });
-        return otp;
     },
 
 
